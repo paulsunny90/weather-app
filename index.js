@@ -1,9 +1,10 @@
 fetch("http://api.weatherapi.com/v1/current.json?key=f50624a11938419891291458251410&q=London&aqi=no")
 .then(response =>response.json())
-// .then(data => console.log(data))
+.then(data => console.log(data))    
 
 
 .then(data=>{
+    if(data){
     let location = data.location.name;
     let humidity= data.current.humidity
     let feelslike_c=data.current.feelslike_c
@@ -14,19 +15,10 @@ fetch("http://api.weatherapi.com/v1/current.json?key=f50624a11938419891291458251
     let windchill_c=data.current.windchill_c
     let temp_f=data.current.temp_f
     let wind_mph=data.current.wind_mph
- 
+     
 
 
 
-    
-
-
-
-
-
-
-
-   
     document.getElementById("location").innerHTML=location
     document.getElementById("Feelslike").innerHTML=feelslike_c+"°"
     document.getElementById("Humidity").innerHTML=humidity+"%"
@@ -55,11 +47,35 @@ fetch("http://api.weatherapi.com/v1/current.json?key=f50624a11938419891291458251
     document.getElementById("8pm").innerHTML=wind+"°"
     document.getElementById("9pm").innerHTML=windchill_c+"°"
     document.getElementById("10pm").innerHTML=humidity+"°"
+    let time=new Date()
+    let Month=time.toDateString('default',{ day: 'long'},)
+     document.getElementById("dats").innerHTML=Month 
+    }
+    else{
+         document.getElementById("hid").style.display="none";{
+            
+         }
+         addEventListener((e)=>{
+            document.getElementById("disply").style.display="block";
+         })
+    }
 
 })
 
-let time=new Date()
-let Month=time.toDateString('default',{ day: 'long'},)
-document.getElementById("dats").innerHTML=Month 
 
 
+// let input = document.getElementById("search");
+// let listItems = document.querySelectorAll("#names li");
+
+// input.addEventListener("keyup", function() {
+//   let filter = input.value.toLowerCase();
+
+//   listItems.forEach(item => {
+//     let text = item.textContent.toLowerCase();
+//     if (text.includes(filter)) {
+//       item.style.display = "";
+//     } else {
+//       item.style.display = "none";
+//     }
+//   });
+// });
