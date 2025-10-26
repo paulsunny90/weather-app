@@ -52,20 +52,85 @@ fetch("http://api.weatherapi.com/v1/current.json?key=f50624a11938419891291458251
      document.getElementById("dats").innerHTML=Month 
     }
     else{
-         document.getElementById("hid").style.display="none";{
-            
-         }
-         addEventListener((e)=>{
-            document.getElementById("disply").style.display="block";
-         })
+     show()
+
+         
     }
+    
 
 })
+function show(){
+    if(data){
+    addEventListener("online",(e)=>{
+    document.getElementById("hid").style.display = "flex";
+     })
+
+}
+else if(data){
+      addEventListener("offline",(e)=>{
+     document.getElementById("hid").style.display = "none";
+    })
+
+}
+else{
+    addEventListener("offline",(e)=>{
+      
+     })
+}
+}
+
+// .catch(error => {
+//     console.error("Error fetching weather data:", error);
+//     document.getElementById("hid").style.display = "none";
+//     document.getElementById("popup").style.display = "flex";
+//   });
+
 
 
 
 // let input = document.getElementById("search");
 // let listItems = document.querySelectorAll("#names li");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // input.addEventListener("keyup", function() {
 //   let filter = input.value.toLowerCase();
@@ -79,3 +144,32 @@ fetch("http://api.weatherapi.com/v1/current.json?key=f50624a11938419891291458251
 //     }
 //   });
 // });
+
+
+
+
+// function countDown(n) {
+//   if (n === 0) {
+//     console.log("Done!");
+//     return; // 🛑 Base case — stops recursion
+//   }
+
+//   console.log(n);
+//   countDown(n - 1); // 🔁 Recursive call
+// }
+
+// countDown(5);
+
+
+function asd(){
+    console.log('hh')
+
+}
+asd(
+    function(){
+        console.log("a")
+
+    })
+    asd()
+
+    
