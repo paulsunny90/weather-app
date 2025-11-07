@@ -1,6 +1,6 @@
 fetch("http://api.weatherapi.com/v1/current.json?key=f50624a11938419891291458251410&q=London&aqi=no")
 .then(response =>response.json())
-.then(data => console.log(data))    
+// .then(data => console.log(data))    
 
 
 .then(data=>{
