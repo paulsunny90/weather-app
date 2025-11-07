@@ -52,32 +52,32 @@ fetch("http://api.weatherapi.com/v1/current.json?key=f50624a11938419891291458251
      document.getElementById("dats").innerHTML=Month 
     }
     else{
-     show()
+     window.location.href="error.html"
 
          
     }
     
 
 })
-function show(){
-    if(data){
-    addEventListener("online",(e)=>{
-    document.getElementById("hid").style.display = "flex";
-     })
+// function show(){
+//     if(data){
+//     addEventListener("online",(e)=>{
+//     document.getElementById("hid").style.display = "flex";
+//      })
 
-}
-else if(data){
-      addEventListener("offline",(e)=>{
-     document.getElementById("hid").style.display = "none";
-    })
+// }
+// else if(data){
+//       addEventListener("offline",(e)=>{
+//      document.getElementById("hid").style.display = "none";
+//     })
 
-}
-else{
-    addEventListener("offline",(e)=>{
+// }
+// else{
+//     addEventListener("offline",(e)=>{
       
-     })
-}
-}
+//      })
+// }
+// }
 
 // .catch(error => {
 //     console.error("Error fetching weather data:", error);
