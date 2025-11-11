@@ -1,23 +1,37 @@
-fetch("http://api.weatherapi.com/v1/current.json?key=f50624a11938419891291458251410&q=London&aqi=no")
-.then(response =>response.json())
-// .then(data => console.log(data))    
+ window.addEventListener("load",()=>{
+    if(navigator.geolocation){
+        navigator.geolocation.getCurrentPosition(async(position)=>{
+            let lat=position.coords.latitude;
+            let lon=position.coords.longitude;
+            console.log(lat,lon);
+        })
+    }
+    else{
+        alert("Geolocation is not supported by this browser.");
+    }
+})
+document.getElementById("Search").addEventListener("click", async () => {
+    let city=document.getElementById("city").value;
+   try {
+    let response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=4cd901f667dbd1d3fc3792b0f764a584`);
+    if(response.status!==200){
+        alert("City not found");
+        return;
+    }
+    let data = await response.json();
+    let location = data.name;
+    let humidity= data.main.humidity
+    let feelslike_c=data.main.feels_like
+    let temp_c=data.main.temp
+    let wind=data.wind.speed
+    let precip=data.rain ? data.rain["1h"] : 0
+    let windchill=data.main.feels_like
+    let windchill_c=data.main.feels_like
+    let temp_f=data.main.temp
+    let wind_mph=data.wind.speed
 
 
-.then(data=>{
-    if(data){
-    let location = data.location.name;
-    let humidity= data.current.humidity
-    let feelslike_c=data.current.feelslike_c
-    let temp_c=data.current.temp_c
-    let wind=data.current.wind_kph
-    let precip=data.current.precip_in
-    let windchill=data.current.windchill_f
-    let windchill_c=data.current.windchill_c
-    let temp_f=data.current.temp_f
-    let wind_mph=data.current.wind_mph
-     
-
-
+    
 
     document.getElementById("location").innerHTML=location
     document.getElementById("Feelslike").innerHTML=feelslike_c+"°"
@@ -50,15 +64,18 @@ fetch("http://api.weatherapi.com/v1/current.json?key=f50624a11938419891291458251
     let time=new Date()
     let Month=time.toDateString('default',{ day: 'long'},)
      document.getElementById("dats").innerHTML=Month 
-    }
-    else{
-     window.location.href="error.html"
 
-         
-    }
+
+
     
 
-})
+}
+
+    catch(error){
+    console.error("Error fetching weather data:", error);
+    }
+});
+
 // function show(){
 //     if(data){
 //     addEventListener("online",(e)=>{
@@ -91,47 +108,6 @@ fetch("http://api.weatherapi.com/v1/current.json?key=f50624a11938419891291458251
 // let input = document.getElementById("search");
 // let listItems = document.querySelectorAll("#names li");
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // input.addEventListener("keyup", function() {
 //   let filter = input.value.toLowerCase();
 
@@ -161,15 +137,16 @@ fetch("http://api.weatherapi.com/v1/current.json?key=f50624a11938419891291458251
 // countDown(5);
 
 
-function asd(){
-    console.log('hh')
+// function asd(){
+//     console.log('hh')
 
-}
-asd(
-    function(){
-        console.log("a")
+// }
+// asd(
+//     function(){
+//         console.log("a")
 
-    })
-    asd()
+//     })
+//     asd()
 
-    
+
+
