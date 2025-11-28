@@ -1,152 +1,127 @@
- window.addEventListener("load",()=>{
-    if(navigator.geolocation){
-        navigator.geolocation.getCurrentPosition(async(position)=>{
-            let lat=position.coords.latitude;
-            let lon=position.coords.longitude;
-            console.log(lat,lon);
-        })
-    }
-    else{
+ // 🌍 Auto Detect Location on Page Load
+window.addEventListener("load", () => {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(async (position) => {
+            let lat = position.coords.latitude;
+            let lon = position.coords.longitude;
+
+            console.log("Your location:", lat, lon);
+
+            // Fetch weather using lat & lon
+            getWeatherByCoords(lat, lon);
+        });
+    } else {
         alert("Geolocation is not supported by this browser.");
-    }
-})
-document.getElementById("Search").addEventListener("click", async () => {
-    let city=document.getElementById("city").value;
-   try {
-    let response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=4cd901f667dbd1d3fc3792b0f764a584`);
-    if(response.status!==200){
-        alert("City not found");
-        return;
-    }
-    let data = await response.json();
-    let location = data.name;
-    let humidity= data.main.humidity
-    let feelslike_c=data.main.feels_like
-    let temp_c=data.main.temp
-    let wind=data.wind.speed
-    let precip=data.rain ? data.rain["1h"] : 0
-    let windchill=data.main.feels_like
-    let windchill_c=data.main.feels_like
-    let temp_f=data.main.temp
-    let wind_mph=data.wind.speed
-
-
-    
-
-    document.getElementById("location").innerHTML=location
-    document.getElementById("Feelslike").innerHTML=feelslike_c+"°"
-    document.getElementById("Humidity").innerHTML=humidity+"%"
-    document.getElementById("temp").innerHTML=temp_c+"°"
-    document.getElementById("Wind").innerHTML=wind+"km/h"
-    document.getElementById("Precipitation").innerHTML=precip+"mm"
-    document.getElementById("windchill").innerHTML=windchill+"°"
-    document.getElementById("windchill_c").innerHTML=windchill_c+"°"
-    document.getElementById("tempf").innerHTML=temp_f+"°"
-    document.getElementById("temp-l").innerHTML=temp_c+"°"
-    document.getElementById("mon").innerHTML=wind+"°"
-    document.getElementById("Monday").innerHTML=wind_mph+"°"
-    document.getElementById("tue").innerHTML=humidity+"°"
-    document.getElementById("te").innerHTML=temp_f+"°"
-    document.getElementById("Wednes").innerHTML=windchill_c+"°"
-    document.getElementById("Wed").innerHTML=wind_mph+"°"
-    document.getElementById("fr").innerHTML=temp_c+"°"
-    document.getElementById("fri").innerHTML=temp_f+"°"
-    document.getElementById("sa").innerHTML=windchill_c+"°"
-    document.getElementById("sat").innerHTML=wind+"°"
-    document.getElementById("3pm").innerHTML=windchill+"°"
-    document.getElementById("4pm").innerHTML=temp_f+"°"
-    document.getElementById("5pm").innerHTML=temp_c+"°"
-    document.getElementById("6pm").innerHTML=wind_mph+"°"
-    document.getElementById("7pm").innerHTML=windchill_c+"°"
-    document.getElementById("8pm").innerHTML=wind+"°"
-    document.getElementById("9pm").innerHTML=windchill_c+"°"
-    document.getElementById("10pm").innerHTML=humidity+"°"
-    let time=new Date()
-    let Month=time.toDateString('default',{ day: 'long'},)
-     document.getElementById("dats").innerHTML=Month 
-
-
-
-    
-
-}
-
-    catch(error){
-    console.error("Error fetching weather data:", error);
     }
 });
 
-// function show(){
-//     if(data){
-//     addEventListener("online",(e)=>{
-//     document.getElementById("hid").style.display = "flex";
-//      })
 
-// }
-// else if(data){
-//       addEventListener("offline",(e)=>{
-//      document.getElementById("hid").style.display = "none";
-//     })
+// 🔍 Weather by City Search
+document.getElementById("Search").addEventListener("click", async () => {
+    let city = document.getElementById("city").value.trim();
 
-// }
-// else{
-//     addEventListener("offline",(e)=>{
-      
-//      })
-// }
-// }
+    if (!city) {
+        alert("Enter city name");
+        return;
+    }
 
-// .catch(error => {
-//     console.error("Error fetching weather data:", error);
-//     document.getElementById("hid").style.display = "none";
-//     document.getElementById("popup").style.display = "flex";
-//   });
+    getWeatherByCity(city);
+});
 
 
 
+// --------------------------------------------
+// 🌦 FUNCTIONS
+// --------------------------------------------
 
-// let input = document.getElementById("search");
-// let listItems = document.querySelectorAll("#names li");
+// ✔ Get Weather by City Name
+async function getWeatherByCity(city) {
+    try {
+        let response = await fetch(
+            `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=4cd901f667dbd1d3fc3792b0f764a584&units=metric`
+        );
 
-// input.addEventListener("keyup", function() {
-//   let filter = input.value.toLowerCase();
+        if (!response.ok) {
+            alert("City not found");
+            return;
+        }
 
-//   listItems.forEach(item => {
-//     let text = item.textContent.toLowerCase();
-//     if (text.includes(filter)) {
-//       item.style.display = "";
-//     } else {
-//       item.style.display = "none";
-//     }
-//   });
-// });
+        let data = await response.json();
+        updateUI(data);
 
-
-
-
-// function countDown(n) {
-//   if (n === 0) {
-//     console.log("Done!");
-//     return; // 🛑 Base case — stops recursion
-//   }
-
-//   console.log(n);
-//   countDown(n - 1); // 🔁 Recursive call
-// }
-
-// countDown(5);
-
-
-// function asd(){
-//     console.log('hh')
-
-// }
-// asd(
-//     function(){
-//         console.log("a")
-
-//     })
-//     asd()
+    } catch (error) {
+        console.error("Error fetching weather:", error);
+    }
+}
 
 
 
+// ✔ Get Weather using Latitude + Longitude
+async function getWeatherByCoords(lat, lon) {
+    try {
+        let response = await fetch(
+            `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=4cd901f667dbd1d3fc3792b0f764a584&units=metric`
+        );
+
+        let data = await response.json();
+        updateUI(data);
+
+    } catch (error) {
+        console.error("Error fetching weather:", error);
+    }
+}
+
+
+
+// --------------------------------------------
+// 🎨 Update UI (Common Function)
+// --------------------------------------------
+
+function updateUI(data) {
+
+    let location = data.name;
+    let humidity = data.main.humidity;
+    let feelslike = Math.round(data.main.feels_like);
+    let temp = Math.round(data.main.temp);
+    let wind = data.wind.speed;
+    let precip = data.rain ? data.rain["1h"] : 0;
+
+    // ✔ Update Values
+    document.getElementById("location").innerHTML = location;
+    document.getElementById("Feelslike").innerHTML = feelslike + "°";
+    document.getElementById("Humidity").innerHTML = humidity + "%";
+    document.getElementById("temp").innerHTML = temp + "°";
+    document.getElementById("Wind").innerHTML = wind + " km/h";
+    document.getElementById("Precipitation").innerHTML = precip + " mm";
+
+    // Daily & hourly dummy values (you can replace later)
+    document.getElementById("windchill").innerHTML = feelslike + "°";
+    document.getElementById("windchill_c").innerHTML = feelslike + "°";
+    document.getElementById("tempf").innerHTML = temp + "°";
+    document.getElementById("temp-l").innerHTML = temp + "°";
+    document.getElementById("mon").innerHTML = wind + "°";
+    document.getElementById("Monday").innerHTML = wind + "°";
+    document.getElementById("tue").innerHTML = humidity + "°";
+    document.getElementById("te").innerHTML = temp + "°";
+    document.getElementById("Wednes").innerHTML = feelslike + "°";
+    document.getElementById("Wed").innerHTML = wind + "°";
+    document.getElementById("fr").innerHTML = temp + "°";
+    document.getElementById("fri").innerHTML = temp + "°";
+    document.getElementById("sa").innerHTML = feelslike + "°";
+    document.getElementById("sat").innerHTML = wind + "°";
+
+    // Hourly
+    document.getElementById("3pm").innerHTML = temp + "°";
+    document.getElementById("4pm").innerHTML = temp + "°";
+    document.getElementById("5pm").innerHTML = temp + "°";
+    document.getElementById("6pm").innerHTML = wind + "°";
+    document.getElementById("7pm").innerHTML = feelslike + "°";
+    document.getElementById("8pm").innerHTML = wind + "°";
+    document.getElementById("9pm").innerHTML = feelslike + "°";
+    document.getElementById("10pm").innerHTML = humidity + "°";
+
+    // ✔ Correct Date
+    let now = new Date();
+    let fullDate = now.toDateString();  // Example: "Mon Nov 28 2025"
+    document.getElementById("dats").innerHTML = fullDate;
+}

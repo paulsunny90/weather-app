@@ -4,254 +4,240 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <title>Weather App</title>
+
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body style="background-color:hsl(243, 96%, 9%);" class=" text-white" id="hid">
+<body class="bg-[#05011A] text-white">
 
-    <ul class=" flex justify-between text-center text-white font-bold p-14">
-        <li> <img src="assets/images/logo.svg" alt=""></li>
-        <li class="flex  text-center justify-center items-center w-35 bg-gray-600 rounded-[5px] gap-6"> <img
-                src="assets/images/icon-units.svg" alt="" class="h-5"> Units</li>
+    <!-- Navbar -->
+    <ul class="flex justify-between items-center p-6">
+        <li>
+            <img src="assets/images/logo.svg" class="h-10" alt="">
+        </li>
 
+        <li class="flex items-center gap-3 bg-gray-700 px-4 py-2 rounded-md">
+            <img src="assets/images/icon-units.svg" class="h-5" alt="">
+            <span>Units</span>
+        </li>
     </ul>
-    <div class=" text-center">
-        <p class="text-[60px] font-bold text-white "> How's the sky looking today?</p>
+
+    <!-- Title -->
+    <div class="text-center">
+        <p class="text-4xl md:text-6xl font-bold">
+            How's the sky looking today?
+        </p>
     </div>
-    <div class="flex justify-center items-center gap-20 pt-10  max-sm:flex-col  max-sm:gap-10 ">
-        <div
-            class=" flex justify- start items-center text-center bg-gray-600 w-130 h-10 gap-2 pl-3 rounded-2  max-sm:w-70">
-            <img src="assets/images/icon-search.svg" alt="">
-            <input type="text" name="" id="city" placeholder=" Search for a city, e.g., New York" class="w-130 borrder">
-            <p> </p>
+
+    <!-- Search -->
+    <div class="flex justify-center items-center gap-6 pt-10 flex-col md:flex-row">
+
+        <div class="flex items-center bg-gray-700 px-3 py-2 w-[300px] md:w-[450px] rounded-md">
+            <img src="assets/images/icon-search.svg" class="h-5" alt="">
+            <input id="city"
+                class="bg-transparent w-full px-2 outline-none"
+                placeholder="Search for a city, e.g. New York">
         </div>
-        <button class="bg-blue-600 w-30 h-10 rounded-2" id="Search">Search</button>
+
+        <button id="Search" class="bg-blue-600 px-6 py-2 rounded-md">
+            Search
+        </button>
     </div>
-    <!-- bootstrap -->
-    <div class="container pt-10">
-        <!-- main -->
-        <div class="row">
-            <div class="col-lg-8">
-                <div class="row">
-                    <div class="col-lg-12 col-lg-4 ">
-                        <div class="row column-gap-5 row-gap-4 ">
-                            <div
-                                class="col-lg-12 bg-[url(assets/images/bg-today-large.svg)] bg-no-repeat w-[100%] h-[300px] bg-contain flex flex-col items-center justify-center  ">
-                                <div class="flex text-start justify-center gap-50  max-sm:gap-20">
-                                    <p id="location" class=" text-[50px] font-bold  max-sm:text-[20px]"></p>
-                                    <div class="flex items-center justify-center">
-                                        <img src="assets/images/icon-sunny.webp" alt="" class=" h-30">
-                                        <p id="temp" class=" text-[40px]  font-bold max-sm:text-[20px]"> </p>
-                                    </div>
 
-                                </div>
-                                <div class=" pr-[67%] text-[20]">
-                                    <p id="dats"></p>
-                                </div>
+    <!-- Main Layout -->
+    <div class="max-w-[1300px] mx-auto mt-10 grid grid-cols-1 lg:grid-cols-3 gap-8 px-4">
 
+        <!-- Left Section -->
+        <div class="lg:col-span-2 space-y-6">
 
-                            </div>
-                            <div class="col-lg-3 bg-gray-600 h-30 rounded-4 text-start">
-                                <p class="pt-3"> Feels like</p>
-                                <p id="Feelslike" class=" text-[30px]"> </p>
+            <!-- Today Weather Card -->
+            <div class="bg-[url(assets/images/bg-today-large.svg)] bg-contain bg-no-repeat w-full h-[300px] flex flex-col justify-center items-center">
+                <div class="flex justify-center gap-16 md:gap-36">
+                    <p id="location" class="text-3xl md:text-5xl font-bold"></p>
 
-                            </div>
-                            <div class="col-lg-2 bg-gray-600 h-30  rounded-4  text-start">
-                                <p class="pt-3">Humidity</p>
-                                <p id="Humidity" class=" text-[30px]"></p>
-
-                            </div>
-
-                            <div class="col-lg-2 bg-gray-600 h-30 rounded-4  text-start">
-                                <p class="pt-3"> Wind</p>
-                                <p id="Wind" class=" text-[30px]"></p>
-
-                            </div>
-
-                            <div class="col-lg-2 bg-gray-600 h-30 rounded-4  text-start">
-                                <p class="pt-3"> Precipitation</p>
-                                <p id="Precipitation" class=" text-[30px]"></p>
-
-                            </div>
-                        </div>
-
-                        <div class="row column-gap-5 pt-3">
-                            <p>Daily forecast</p>
-
-                            <div class="col-lg-1 bg-gray-600 h-30 rounded-2 ">
-                                <p>Tue</p>
-                                <img src="assets/images/icon-rain.webp" alt="">
-                                <div class="flex gap-2 text-center justify-center items-center text-[12px]">
-                                    <p id="tue"> </p>
-                                    <p id="te"></p>
-                                </div>
-
-                            </div>
-                            <div class="col-lg-1  bg-gray-600 h-30 rounded-2">
-                                <p>Wed</p>
-                                <img src="assets/images/icon-drizzle.webp" alt="">
-                                <div class="flex gap-2 text-center justify-center items-center text-[12px]">
-                                    <p id="Wednes"></p>
-                                    <p id="Wed"></p>
-                                </div>
-                            </div>
-                            <div class="col-lg-1  bg-gray-600 h-30 rounded-2">
-                                <p>Thu</p>
-                                <img src="assets/images/icon-sunny.webp" alt="">
-                                <div class="flex gap-2 text-center justify-center items-center text-[10px]">
-                                    <p id="tempf"> </p>
-                                    <p id="temp-l"></p>
-                                </div>
-
-                            </div>
-                            <div class="col-lg-1  bg-gray-600 h-30 rounded-2">
-                                <p>Fri</p>
-                                <img src="assets/images/icon-partly-cloudy.webp" alt="">
-                                <div class="flex gap-2 text-center justify-center items-center text-[10px]">
-                                    <p id="fr"> </p>
-                                    <p id="fri"></p>
-                                </div>
-
-                            </div>
-                            <div class="col-lg-1  bg-gray-600 h-30 rounded-2">
-                                <p>Sat</p>
-                                <img src="assets/images/icon-storm.webp" alt="">
-                                <div class="flex gap-2 text-center justify-center items-center text-[12px]">
-                                    <p id="sa"></p>
-                                    <p id="sat"></p>
-                                </div>
-
-                            </div>
-                            <div class="col-lg-1  bg-gray-600 h-30 rounded-2">
-                                <p>Sun</p>
-                                <img src="assets/images/icon-snow.webp" alt="">
-                                <div class="flex gap-2 text-center justify-center items-center text-[10px]">
-                                    <p id="windchill"></p>
-                                    <p id="windchill_c"></p>
-                                </div>
-
-                            </div>
-                            <div class="col-lg-1 bg-gray-600 h-30 rounded-2">
-                                <p>Mon</p>
-                                <img src="assets/images/icon-fog.webp" alt="">
-                                <div class="flex gap-2 text-center justify-center items-center text-[12px]">
-                                    <p id="mon"> </p>
-                                    <p id="Monday"></p>
-                                </div>
-
-                            </div>
-
-                        </div>
+                    <div class="flex items-center">
+                        <img src="assets/images/icon-sunny.webp" class="h-16 md:h-24" alt="">
+                        <p id="temp" class="text-3xl md:text-5xl font-bold"></p>
                     </div>
+                </div>
+
+                <div class="text-left w-full px-10 mt-4">
+                    <p id="dats" class="text-xl"></p>
                 </div>
             </div>
-            <div class="col-lg-4 bg-gray-800 w-[50%] h-[700px] rounded-5 ">
-                <div class="col-lg-12 bg-gray-800 h-13 flex justify-evenly items-center rounded-5 ">
-                    <p> Hourly forecast</p>
-                    <div>
-                        <select name="days" id="" class="bg-gray-600">
-                            <option value="">Monday</option>
-                            <option value="">Tuesday</option>
-                            <option value="">Wednesday</option>
-                            <option value="">Thursday,</option>
-                            <option value="">Friday</option>
-                            <option value="">Saturday</option>
-                            <option value="">Sunday</option>
-                        </select>
+
+            <!-- Stats Row -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+
+                <div class="bg-gray-700 p-4 rounded-xl">
+                    <p>Feels like</p>
+                    <p id="Feelslike" class="text-3xl"></p>
+                </div>
+
+                <div class="bg-gray-700 p-4 rounded-xl">
+                    <p>Humidity</p>
+                    <p id="Humidity" class="text-3xl"></p>
+                </div>
+
+                <div class="bg-gray-700 p-4 rounded-xl">
+                    <p>Wind</p>
+                    <p id="Wind" class="text-3xl"></p>
+                </div>
+
+                <div class="bg-gray-700 p-4 rounded-xl">
+                    <p>Precipitation</p>
+                    <p id="Precipitation" class="text-3xl"></p>
+                </div>
+
+            </div>
+
+            <!-- Daily Forecast -->
+            <div>
+                <p class="pb-3 text-xl font-semibold">Daily Forecast</p>
+
+                <div class="grid grid-cols-3 md:grid-cols-7 gap-4">
+
+                    <div class="bg-gray-700 text-center p-3 rounded-md">
+                        <p>Tue</p>
+                        <img src="assets/images/icon-rain.webp" class="mx-auto h-10" alt="">
+                        <div class="flex justify-center gap-2 text-sm">
+                            <p id="tue"></p>
+                            <p id="te"></p>
+                        </div>
+                    </div>
+
+                    <div class="bg-gray-700 text-center p-3 rounded-md">
+                        <p>Wed</p>
+                        <img src="assets/images/icon-drizzle.webp" class="mx-auto h-10" alt="">
+                        <div class="flex justify-center gap-2 text-sm">
+                            <p id="Wednes"></p>
+                            <p id="Wed"></p>
+                        </div>
+                    </div>
+
+                    <div class="bg-gray-700 text-center p-3 rounded-md">
+                        <p>Thu</p>
+                        <img src="assets/images/icon-sunny.webp" class="mx-auto h-10" alt="">
+                        <div class="flex justify-center gap-2 text-sm">
+                            <p id="tempf"></p>
+                            <p id="temp-l"></p>
+                        </div>
+                    </div>
+
+                    <div class="bg-gray-700 text-center p-3 rounded-md">
+                        <p>Fri</p>
+                        <img src="assets/images/icon-partly-cloudy.webp" class="mx-auto h-10" alt="">
+                        <div class="flex justify-center gap-2 text-sm">
+                            <p id="fr"></p>
+                            <p id="fri"></p>
+                        </div>
+                    </div>
+
+                    <div class="bg-gray-700 text-center p-3 rounded-md">
+                        <p>Sat</p>
+                        <img src="assets/images/icon-storm.webp" class="mx-auto h-10" alt="">
+                        <div class="flex justify-center gap-2 text-sm">
+                            <p id="sa"></p>
+                            <p id="sat"></p>
+                        </div>
+                    </div>
+
+                    <div class="bg-gray-700 text-center p-3 rounded-md">
+                        <p>Sun</p>
+                        <img src="assets/images/icon-snow.webp" class="mx-auto h-10" alt="">
+                        <div class="flex justify-center gap-2 text-sm">
+                            <p id="windchill"></p>
+                            <p id="windchill_c"></p>
+                        </div>
+                    </div>
+
+                    <div class="bg-gray-700 text-center p-3 rounded-md">
+                        <p>Mon</p>
+                        <img src="assets/images/icon-fog.webp" class="mx-auto h-10" alt="">
+                        <div class="flex justify-center gap-2 text-sm">
+                            <p id="mon"></p>
+                            <p id="Monday"></p>
+                        </div>
                     </div>
 
                 </div>
+            </div>
+        </div>
 
-                <br>
-                <div
-                    class="col-lg-12 bg-gray-600 h-13 rounded-2 shadow-xl flex text-center  items-center justify-start  gap-2 ">
-                    <img src="assets/images/icon-overcast.webp" alt="" class=" w-15">
+        <!-- Right Section (Hourly) -->
+        <div class="bg-gray-800 p-5 rounded-2xl h-fit space-y-4">
+
+            <div class="flex justify-between items-center bg-gray-800 text-lg">
+                <p>Hourly forecast</p>
+
+                <select class="bg-gray-700 px-3 py-1 rounded-md">
+                    <option>Monday</option>
+                    <option>Tuesday</option>
+                    <option>Wednesday</option>
+                    <option>Thursday</option>
+                    <option>Friday</option>
+                    <option>Saturday</option>
+                    <option>Sunday</option>
+                </select>
+            </div>
+
+            <!-- Hourly List -->
+            <div class="space-y-3">
+
+                <!-- Template -->
+                <div class="bg-gray-700 flex items-center gap-3 p-3 rounded-md">
+                    <img src="assets/images/icon-overcast.webp" class="h-10">
                     <p>3pm</p>
-                    <p class="pl-60" id="3pm"></p>
-
-
+                    <p id="3pm" class="ml-auto"></p>
                 </div>
-                <br>
-                <div
-                    class="col-lg-12 bg-gray-600 h-13 rounded-2 shadow-xl flex text-center  items-center justify-start  gap-2">
-                    <img src="assets/images/icon-partly-cloudy.webp" alt="" class=" w-15">
+
+                <div class="bg-gray-700 flex items-center gap-3 p-3 rounded-md">
+                    <img src="assets/images/icon-partly-cloudy.webp" class="h-10">
                     <p>4pm</p>
-                    <p class="pl-60" id="4pm"></p>
-
-
+                    <p id="4pm" class="ml-auto"></p>
                 </div>
-                <br>
-                <div
-                    class="col-lg-12 bg-gray-600 h-13 rounded-2 shadow-xl flex text-center  items-center justify-start  gap-2">
-                    <img src="assets/images/icon-sunny.webp" alt="" class=" w-15">
+
+                <div class="bg-gray-700 flex items-center gap-3 p-3 rounded-md">
+                    <img src="assets/images/icon-sunny.webp" class="h-10">
                     <p>5pm</p>
-                    <p class="pl-60" id="5pm"></p>
-
-
+                    <p id="5pm" class="ml-auto"></p>
                 </div>
-                <br>
-                <div
-                    class="col-lg-12 bg-gray-600 h-13 rounded-2 shadow-xl flex text-center  items-center justify-start  gap-2">
-                    <img src="" alt="">
-                    <img src="assets/images/icon-overcast.webp" alt="" class=" w-15">
+
+                <div class="bg-gray-700 flex items-center gap-3 p-3 rounded-md">
+                    <img src="assets/images/icon-overcast.webp" class="h-10">
                     <p>6pm</p>
-                    <p class="pl-58" id="6pm"></p>
-
-
-
+                    <p id="6pm" class="ml-auto"></p>
                 </div>
-                <br>
-                <div
-                    class="col-lg-12 bg-gray-600 h-13 rounded-2 shadow-xl flex text-center  items-center justify-start  gap-2">
-                    <img src="" alt="">
-                    <img src="assets/images/icon-snow.webp" alt="" class=" w-15">
+
+                <div class="bg-gray-700 flex items-center gap-3 p-3 rounded-md">
+                    <img src="assets/images/icon-snow.webp" class="h-10">
                     <p>7pm</p>
-                    <p class="pl-58" id="7pm"></p>
-
-
+                    <p id="7pm" class="ml-auto"></p>
                 </div>
-                <br>
-                <div
-                    class="col-lg-12 bg-gray-600 h-13 rounded-2 shadow-xl flex text-center  items-center justify-start  gap-2">
-                    <img src="assets/images/icon-fog.webp" alt="" class=" w-15">
+
+                <div class="bg-gray-700 flex items-center gap-3 p-3 rounded-md">
+                    <img src="assets/images/icon-fog.webp" class="h-10">
                     <p>8pm</p>
-                    <p class="pl-60" id="8pm"></p>
-
-
+                    <p id="8pm" class="ml-auto"></p>
                 </div>
-                <br>
-                <div
-                    class="col-lg-12 bg-gray-600 h-13 rounded-2 shadow-xl  flex text-center  items-center justify-start  gap-2">
-                    <img src="assets/images/icon-snow.webp" alt="" class=" w-15">
+
+                <div class="bg-gray-700 flex items-center gap-3 p-3 rounded-md">
+                    <img src="assets/images/icon-snow.webp" class="h-10">
                     <p>9pm</p>
-                    <p class="pl-60" id="9pm"></p>
-
-
+                    <p id="9pm" class="ml-auto"></p>
                 </div>
-                <br>
-                <div
-                    class="col-lg-12 bg-gray-600 h-13 rounded-2 shadow-xl  flex text-center  items-center justify-start  gap-2">
-                    <img src="assets/images/icon-overcast.webp" alt="" class=" w-15">
+
+                <div class="bg-gray-700 flex items-center gap-3 p-3 rounded-md">
+                    <img src="assets/images/icon-overcast.webp" class="h-10">
                     <p>10pm</p>
-                    <p class="pl-58" id="10pm"></p>
-
-
-
+                    <p id="10pm" class="ml-auto"></p>
                 </div>
-
             </div>
         </div>
     </div>
 
-
-
-
-
-
-    <script src="	https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
     <script src="index.js"></script>
 </body>
-
 </html>
